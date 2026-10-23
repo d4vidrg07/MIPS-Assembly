@@ -4,7 +4,7 @@ cadena2: .asciiz "\nIntroducir dato B = "
 cadena3: .asciiz "\nEl valor de A+B es = "   
 
     .data 0x10010103
-# definir a partir de aquí tres palabras: A, B y Suma. Tenga cuidado con el comienzo del segmento.
+# define three words from here: A, B and Sum. Be careful with the start of the segment.
     .align 2
 A:       .word 0
 B:       .word 0
@@ -12,7 +12,7 @@ Suma:    .word 0
 
 	.text   
 	.globl main 
-main:	# añada aquí las instrucciones de su programa
+main:	# add your program instructions here
         
         li $v0, 4
         la $a0, cadena1

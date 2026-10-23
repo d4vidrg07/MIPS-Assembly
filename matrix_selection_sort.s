@@ -3,7 +3,7 @@
 bucle2:
         # $a0 = matriz (half*)
         # $a1 = n columnas
-        # $a2 = i   (fila a ordenar)
+        # $a2 = i   (row to sort)
 
         # Frame:
         #   0($sp)  = local max (word)
@@ -30,7 +30,7 @@ bucle2:
 
 for_b2:
         addi $t9, $s1, -1
-        bge  $s0, $t9, fin_b2   # di j < nºcol, fin
+        bge  $s0, $t9, fin_b2   # if j >= number of columns - 1, end
 
         # max = j
         sw   $s0, 0($s2)
@@ -46,7 +46,7 @@ for_b2:
         jal  bucle3
         addi $sp, $sp, 4
 
-        # si max != j, intercambiar M[i][j] con M[i][max]
+        # if max != j, swap M[i][j] with M[i][max]
         lw   $t0, 0($s2)       # max
         beq  $t0, $s0, next_b2
 
@@ -115,16 +115,16 @@ bucle3:
 for_b3:
         bge  $s0, $a1, fin_b3
 
-        # valor actual: M[i][k]
-        #offset y guardo el half
+        # current value: M[i][k]
+        #offset and store the halfword
         mul  $t0, $a2, $a1
         add  $t0, $t0, $s0
         sll  $t0, $t0, 1
         add  $t1, $a0, $t0
         lh   $t2, 0($t1)
 
-        # valor máximo actual: M[i][max]
-        #offset y guardo el half del max
+        # current maximum value: M[i][max]
+        #offset and store the halfword of the max
         lw   $t3, 0($s1)       # max
         mul  $t4, $a2, $a1
         add  $t4, $t4, $t3
@@ -132,7 +132,7 @@ for_b3:
         add  $t5, $a0, $t4
         lh   $t6, 0($t5)
 
-        # si M[i][k] > M[i][max], max = k
+        # if M[i][k] > M[i][max], max = k
         ble  $t2, $t6, next_b3
         sw   $s0, 0($s1)
 
